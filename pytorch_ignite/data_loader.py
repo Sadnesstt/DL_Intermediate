@@ -59,7 +59,7 @@ def get_loaders(config):
     ).split([train_cnt, valid_cnt], dim = 0)
 
     train_loader = DataLoader(
-        dataset = MnistDataset(train_x, train_y, faltten = True),
+        dataset = MnistDataset(train_x, train_y, flatten = True),
         batch_size = config.batch_size,
         shuffle=True,
     )

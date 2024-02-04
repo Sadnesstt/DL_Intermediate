@@ -12,7 +12,7 @@ from ignite.engine import Events
 from ignite.metrics import RunningAverage
 from ignite.contrib.handlers.tqdm_logger import ProgressBar
 
-from utils import ge_grad_norm, get_parameter_norm
+from utils import get_grad_norm, get_parameter_norm
 
 VERBOSE_SILENT = 0
 VERBOSE_EPOCH_WISE = 1
@@ -24,7 +24,7 @@ class MyEngine(Engine):
         # Ignite Engine does not have objects in below lines.
         # Thus, we assign class variables to access these object, during the procedure.
         self.model = model
-        self.crit - crit
+        self.crit = crit
         self.optimizer = optimizer
         self.config = config
 
@@ -164,7 +164,7 @@ class MyEngine(Engine):
 
 class Trainer():
 
-    def __init__(self, config)
+    def __init__(self, config):
         self.config = config
 
     def train(
@@ -184,32 +184,32 @@ class Trainer():
         MyEngine.attach(
             train_engine,
             validation_engine,
-            verbse = self.config.verbose
+            verbose = self.config.verbose
         )
 
-    def run_validation(engine, validation_engine, valid_loader):
-        validation_engine.run(valid_loader, max_epochs = 1)
+        def run_validation(engine, validation_engine, valid_loader):
+            validation_engine.run(valid_loader, max_epochs = 1)
 
-    train_engine.add_event_handler(
-        Events.EPOCH_COMPLETED, # event
-        run_validation, # function
-        validation_engine, valid_loader, # arguments
-    )
-    validation_engine.add_event_handler(
-        Events.EPOCH_COMPLETED, # event
-        MyEngine.check_best, #function
-    )
-    validation_engine.add_event_handler(
-        Events.EPOCH_COMPLETED, # event
-        MyEngine.save_model, # function
-        train_engine, self.config, # arguments
-    )
+        train_engine.add_event_handler(
+            Events.EPOCH_COMPLETED, # event
+            run_validation, # function
+            validation_engine, valid_loader, # arguments
+        )
+        validation_engine.add_event_handler(
+            Events.EPOCH_COMPLETED, # event
+            MyEngine.check_best, #function
+        )
+        validation_engine.add_event_handler(
+            Events.EPOCH_COMPLETED, # event
+            MyEngine.save_model, # function
+            train_engine, self.config, # arguments
+        )
 
-    train_engine.run(
-        train_loader,
-        max_epochs = self.config.n_epochs,
-    )
+        train_engine.run(
+            train_loader,
+            max_epochs = self.config.n_epochs,
+        )
 
-    model.load_state_dict(validation_engine.best_model)
+        model.load_state_dict(validation_engine.best_model)
 
-    return model
+        return model

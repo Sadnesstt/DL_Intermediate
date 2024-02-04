@@ -1,5 +1,4 @@
 import argparse
-from typing import Required
 
 import torch
 import torch.nn as nn
@@ -12,7 +11,7 @@ from data_loader import get_loaders
 def define_argparser():
     p = argparse.ArgumentParser()
 
-    p.add_argumnet('--model_fn', required = True)
+    p.add_argument('--model_fn', required = True)
     p.add_argument('--gpu_id', type = int, default = 0 if torch.cuda.is_available() else -1)
 
     p.add_argument('--train_ratio', type = float, default = .8)
