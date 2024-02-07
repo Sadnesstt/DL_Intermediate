@@ -39,7 +39,7 @@ def main(config):
     
     device = torch.device('cpu') if config.gpu_id < 0 else torch.device('cuda:%d' % config.gpu_id)
 
-    model, input_sie = get_model(config)
+    model, input_size = get_model(config)
     model = model.to(device)
 
     train_loader, valid_loader, test_loader = get_loaders(config, input_size)
