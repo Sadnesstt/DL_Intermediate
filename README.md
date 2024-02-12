@@ -1,2 +1,2 @@
-# NLP_Basic
-김기현의 딥러닝을 활용한 자연어처리 입문반
+# DL_Intermediate
+김기현의 딥러닝 중급반
