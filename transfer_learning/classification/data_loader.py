@@ -15,7 +15,7 @@ def load_dataset(
     is_train_dir = 'train' if is_train else 'test'
 
     dataset = ImageFolder(
-        os.path.join(dataset_dir, is_train_dir)
+        os.path.join(dataset_dir, is_train_dir),
         data_transforms[is_train_dir]
     )
     return dataset
